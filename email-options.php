@@ -115,7 +115,7 @@ $email_smtp = get_option('email_smtp');
 		var default_template;
 		switch(template) {
 			case "title":
-				default_template = "<?php _e('E-Mail \'%EMAIL_POST_TITLE%\' To A Friend', 'wp-email'); ?>";
+				default_template = "<?php _e('E-Mail \'%EMAIL_POST_TITLE%\' To A Recipient', 'wp-email'); ?>";
 				break;
 			case "subtitle":
 				default_template = "<p style=\"text-align: center;\"><?php _e('Email a copy of <strong>\'%EMAIL_POST_TITLE%\'</strong> to a friend', 'wp-email'); ?></p>";
@@ -256,9 +256,9 @@ $email_smtp = get_option('email_smtp');
 			 <td>
 				<input type="checkbox" name="email_field_yourname" value="1"<?php checked('1', $email_fields['yourname']); ?> />&nbsp;<?php _e('Your Name', 'wp-email'); ?><br />
 				<input type="checkbox" name="email_field_youremail" value="1"<?php checked('1', $email_fields['youremail']); ?> />&nbsp;<?php _e('Your E-Mail', 'wp-email'); ?><br />
-				<input type="checkbox" name="email_field_yourremarks" value="1"<?php checked('1', $email_fields['yourremarks']); ?> />&nbsp;<?php _e('Your Remarks', 'wp-email'); ?><br />
-				<input type="checkbox" name="email_field_friendname" value="1"<?php checked('1', $email_fields['friendname']); ?> />&nbsp;<?php _e('Friend\'s Name', 'wp-email'); ?><br />
-				<input type="checkbox" name="email_field_friendemail" value="1" checked="checked" disabled="disabled" />&nbsp;<?php _e('Friend\'s E-Mail', 'wp-email'); ?>
+				<input type="checkbox" name="email_field_yourremarks" value="1"<?php checked('1', $email_fields['yourremarks']); ?> />&nbsp;<?php _e('Remarks', 'wp-email'); ?><br />
+				<input type="checkbox" name="email_field_friendname" value="1"<?php checked('1', $email_fields['friendname']); ?> />&nbsp;<?php _e('Recipient\'s Name', 'wp-email'); ?><br />
+				<input type="checkbox" name="email_field_friendemail" value="1" checked="checked" disabled="disabled" />&nbsp;<?php _e('Recipient\'s E-Mail', 'wp-email'); ?>
 			</td>
 		</tr>
 		 <tr>
@@ -319,11 +319,11 @@ $email_smtp = get_option('email_smtp');
 			<td><strong>%EMAIL_POST_DATE%</strong> - <?php _e('Display the post\'s date', 'wp-email'); ?></td>
 		</tr>
 		<tr class="alternate">
-			<td><strong>%EMAIL_FRIEND_NAME%</strong> - <?php _e('Display the friend\'s name', 'wp-email'); ?></td>
+			<td><strong>%EMAIL_FRIEND_NAME%</strong> - <?php _e('Display the recipient\'s name', 'wp-email'); ?></td>
 			<td><strong>%EMAIL_POST_CATEGORY%</strong> - <?php _e('Display the post\'s category', 'wp-email'); ?></td>
 		</tr>
 		<tr>
-			<td><strong>%EMAIL_FRIEND_EMAIL%</strong> - <?php _e('Display the friend\'s email', 'wp-email'); ?></td>
+			<td><strong>%EMAIL_FRIEND_EMAIL%</strong> - <?php _e('Display the recipient\'s email', 'wp-email'); ?></td>
 			<td><strong>%EMAIL_POST_EXCERPT%</strong> - <?php _e('Display the post\'s excerpt', 'wp-email'); ?></td>
 		</tr>
 		<tr class="alternate">

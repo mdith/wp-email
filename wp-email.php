@@ -163,14 +163,14 @@ function email_scripts() {
 		'text_error' => __('The Following Error Occurs:', 'wp-email'),
 		'text_name_invalid' => __('- Your Name is empty/invalid', 'wp-email'),
 		'text_email_invalid' => __('- Your Email is empty/invalid', 'wp-email'),
-		'text_remarks_invalid' => __('- Your Remarks is invalid', 'wp-email'),
-		'text_friend_names_empty' => __('- Friend Name(s) is empty', 'wp-email'),
-		'text_friend_name_invalid' => __('- Friend Name is empty/invalid: ', 'wp-email'),
-		'text_max_friend_names_allowed' => sprintf(_n('- Maximum %s Friend Name allowed', '- Maximum %s Friend Names allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
-		'text_friend_emails_empty' => __('- Friend Email(s) is empty', 'wp-email'),
-		'text_friend_email_invalid' => __('- Friend Email is invalid: ', 'wp-email'),
-		'text_max_friend_emails_allowed' => sprintf(_n('- Maximum %s Friend Email allowed', '- Maximum %s Friend Emails allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
-		'text_friends_tally' => __('- Friend Name(s) count does not tally with Friend Email(s) count', 'wp-email'),
+		'text_remarks_invalid' => __('- Remarks entry is invalid', 'wp-email'),
+		'text_friend_names_empty' => __('- Recipient Name(s) is empty', 'wp-email'),
+		'text_friend_name_invalid' => __('- Recipient Name is empty/invalid: ', 'wp-email'),
+		'text_max_friend_names_allowed' => sprintf(_n('- Maximum %s Recipient Name allowed', '- Maximum %s Recipient Names allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
+		'text_friend_emails_empty' => __('- Recipient Email(s) is empty', 'wp-email'),
+		'text_friend_email_invalid' => __('- Recipient Email is invalid: ', 'wp-email'),
+		'text_max_friend_emails_allowed' => sprintf(_n('- Maximum %s Recipient Email allowed', '- Maximum %s Recipient Emails allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
+		'text_friends_tally' => __('- Recipient Name(s) count does not tally with Recipient Email(s) count', 'wp-email'),
 		'text_image_verify_empty' => __('- Image Verification is empty', 'wp-email')
 	));
 }
@@ -889,21 +889,21 @@ function process_email_form() {
 		// Checking Your Remarks Field For Errors
 		if(intval($email_fields['yourremarks']) == 1) {
 			if(!is_valid_remarks($yourremarks)) {
-				$error .= '<br /><strong>&raquo;</strong> '.__('Your Remarks is invalid', 'wp-email');
+				$error .= '<br /><strong>&raquo;</strong> '.__('Remarks entry is invalid', 'wp-email');
 			}
 		}
-		// Checking Friend's Name Field For Errors
+		// Checking Recipient's Name Field For Errors
 		if(intval($email_fields['friendname']) == 1) {
 			if(empty($friendname)) {
-				$error .= '<br /><strong>&raquo;</strong> '.__('Friend Name(s) is empty', 'wp-email');
+				$error .= '<br /><strong>&raquo;</strong> '.__('Recipient Name(s) is empty', 'wp-email');
 			} else {
 				if($multiple_names) {
 					foreach($multiple_names as $multiple_name) {
 						$multiple_name = trim($multiple_name);
 						if(empty($multiple_name)) {
-							$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Friend Name is empty: %s', 'wp-email'), $multiple_name);
+							$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Recipient Name is empty: %s', 'wp-email'), $multiple_name);
 						} elseif(!is_valid_name($multiple_name)) {
-							$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Friend Name is invalid: %s', 'wp-email'), $multiple_name);
+							$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Recipient Name is invalid: %s', 'wp-email'), $multiple_name);
 						} else {
 							$friends[$friendname_count]['name'] = $multiple_name;
 							$friendname_count++;
@@ -915,17 +915,17 @@ function process_email_form() {
 				}
 			}
 		}
-		// Checking Friend's E-Mail Field For Errors
+		// Checking Recipient's E-Mail Field For Errors
 		if(empty($friendemail)) {
-			$error .= '<br /><strong>&raquo;</strong> '.__('Friend Email(s) is empty', 'wp-email');
+			$error .= '<br /><strong>&raquo;</strong> '.__('Recipient Email(s) is empty', 'wp-email');
 		} else {
 			if($multiple_emails) {
 				foreach($multiple_emails as $multiple_email) {
 					$multiple_email = trim($multiple_email);
 					if(empty($multiple_email)) {
-						$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Friend Email is empty: %s', 'wp-email'), $multiple_email);
+						$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Recipient Email is empty: %s', 'wp-email'), $multiple_email);
 					} elseif(!is_valid_email($multiple_email)) {
-						$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Friend Email is invalid: %s', 'wp-email'), $multiple_email);
+						$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Recipient Email is invalid: %s', 'wp-email'), $multiple_email);
 					} else {
 						$friends[$friendemail_count]['email'] = $multiple_email;
 						$friendemail_count++;
@@ -938,11 +938,11 @@ function process_email_form() {
 		}
 		// Checking If The Fields Exceed The Size Of Maximum Entries Allowed
 		if(sizeof($friends) > $multiple_max) {
-			$error .= '<br /><strong>&raquo;</strong> '.sprintf(_n('Maximum %s Friend allowed', 'Maximum %s Friend(s) allowed', $multiple_max, 'wp-email'), number_format_i18n($multiple_max));
+			$error .= '<br /><strong>&raquo;</strong> '.sprintf(_n('Maximum %s Recipient allowed', 'Maximum %s Recipient(s) allowed', $multiple_max, 'wp-email'), number_format_i18n($multiple_max));
 		}
 		if(intval($email_fields['friendname']) == 1) {
 			if($friendname_count != $friendemail_count) {
-				$error .= '<br /><strong>&raquo;</strong> '.__('Friend Name(s) count does not tally with Friend Email(s) count', 'wp-email');
+				$error .= '<br /><strong>&raquo;</strong> '.__('Recipient Name(s) count does not tally with Recipient Email(s) count', 'wp-email');
 			}
 		}
 		// Check Whether We Enable Image Verification
@@ -1149,7 +1149,7 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 			}
 			if(intval($email_fields['yourremarks']) == 1) {
 				$output .= '<p>'."\n";
-				$output .= '	<label for="yourremarks">'.__('Your Remark:', 'wp-email').'</label><br />'."\n";
+				$output .= '	<label for="yourremarks">'.__('Remarks:', 'wp-email').'</label><br />'."\n";
 				$output .= '	<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms">';
 				$val = email_get_remark();
 				if ( !empty($error_field['yourremarks']) ) {
@@ -1163,12 +1163,12 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 			}
 			if(intval($email_fields['friendname']) == 1) {
 				$output .= '<p>'."\n";
-				$output .= '<label for="friendname">'.__('Friend\'s Name: *', 'wp-email').'</label><br />'."\n";
+				$output .= '<label for="friendname">'.__('Recipient\'s Name: *', 'wp-email').'</label><br />'."\n";
 				$output .= '<input type="text" size="50" id="friendname" name="friendname" class="TextField" value="'.(!empty($error_field['friendname']) ? $error_field['friendname'] : '').'" />'.email_multiple(false)."\n";
 				$output .= '</p>'."\n";
 			}
 			$output .= '<p>'."\n";
-			$output .= '<label for="friendemail">'.__('Friend\'s E-Mail: *', 'wp-email').'</label><br />'."\n";
+			$output .= '<label for="friendemail">'.__('Recipient\'s E-Mail: *', 'wp-email').'</label><br />'."\n";
 			$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="TextField" value="'.(!empty($error_field['friendemail']) ? $error_field['friendemail'] : '').'" dir="ltr" />'.email_multiple(false)."\n";
 			$output .= '</p>'."\n";
 			if($email_image_verify) {
@@ -1486,9 +1486,9 @@ function email_activate() {
 	add_option('email_contenttype', 'text/html');
 	add_option('email_mailer', 'php');
 	add_option('email_template_subject', __('Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%', 'wp-email'));
-	add_option('email_template_body', __('<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled \'<strong>%EMAIL_POST_TITLE%</strong>\' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href="%EMAIL_BLOG_URL%">%EMAIL_BLOG_URL%</a><br />URL to article: <a href="%EMAIL_PERMALINK%">%EMAIL_PERMALINK%</a></p>', 'wp-email'));
+	add_option('email_template_body', __('<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br /><strong>%EMAIL_YOUR_NAME%</strong> has recommended this article entitled \'<strong>%EMAIL_POST_TITLE%</strong>\' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href="%EMAIL_BLOG_URL%">%EMAIL_BLOG_URL%</a><br />URL to article: <a href="%EMAIL_PERMALINK%">%EMAIL_PERMALINK%</a></p>', 'wp-email'));
 	add_option('email_template_bodyalt', __('Hi %EMAIL_FRIEND_NAME%,'."\n".
-		'Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.'."\n\n".
+		'%EMAIL_YOUR_NAME% has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.'."\n\n".
 		'Here is his/her remarks:'."\n".
 		'%EMAIL_YOUR_REMARKS%'."\n\n".
 		'%EMAIL_POST_TITLE%'."\n".
@@ -1513,8 +1513,8 @@ function email_activate() {
 	add_option('email_fields', $email_fields);
 
 	// Version 2.11 Options
-	add_option('email_template_title', __('E-Mail \'%EMAIL_POST_TITLE%\' To A Friend', 'wp-email'));
-	add_option('email_template_subtitle', '<p style="text-align: center;">'.__('Email a copy of <strong>\'%EMAIL_POST_TITLE%\'</strong> to a friend', 'wp-email').'</p>');
+	add_option('email_template_title', __('E-Mail \'%EMAIL_POST_TITLE%\' To A Recipient', 'wp-email'));
+	add_option('email_template_subtitle', '<p style="text-align: center;">'.__('Email a copy of <strong>\'%EMAIL_POST_TITLE%\'</strong> to a recipient', 'wp-email').'</p>');
 
 	// Set 'manage_email' Capabilities To Administrator
 	$role = get_role('administrator');
